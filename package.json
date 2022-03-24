@@ -1,0 +1,18 @@
+{
+  "name": "wetube",
+  "version": "1.0.0",
+  "description": "The best way to  watch videos.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/km-kwon/wetube.git"
+  },
+  "scripts": {
+    "win": "node index.js"
+  },
+  "author": "kwon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/km-kwon/wetube/issues"
+  },
+  "homepage": "https://github.com/km-kwon/wetube#readme"
+}
