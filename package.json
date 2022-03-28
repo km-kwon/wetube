@@ -7,12 +7,21 @@
     "url": "git+https://github.com/km-kwon/wetube.git"
   },
   "scripts": {
-    "win": "node index.js"
+    "dev": "nodemon --exec babel-node src/server.js"
   },
   "author": "kwon",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/km-kwon/wetube/issues"
   },
-  "homepage": "https://github.com/km-kwon/wetube#readme"
+  "homepage": "https://github.com/km-kwon/wetube#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
+    "nodemon": "^2.0.15"
+  }
 }
