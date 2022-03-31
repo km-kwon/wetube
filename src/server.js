@@ -1,20 +1,40 @@
 import express from "express";
 import morgan from "morgan";
+import global from "./routers/globalRouter.js";
+import user from "./routers/userRouter.js";
+import video from "./routers/videoRouter.js";
+//export default 했으니 하나의 변수로써 가지고오면서 정의 
+
 const PORT  = 4000;
 const app = express();
 const logger = morgan("dev");
-//morgan 흠.. logger임 그냥 뭐 사용된 메소드나 아니면 경로같은거 보여주는
-
-
-const handleHome = (req,res) =>{
-    return res.send("hello");
-}
-const handleLogin = (req,res) => {
-    return res.send("login");
-}
+app.set("views", "src/views");
+app.set("view engine", "pug");
 app.use(logger);
-app.get("/", handleHome);
-app.get("/login", handleLogin);
+//morgan 흠.. logger임(유용한 패키지) 그냥 뭐 사용된 메소드나 아니면 경로같은거 보여주는
+
+
+//라우터 내에 함수를 넣어줘야댐
+app.use("/", global);
+app.use("/videos", video);
+app.use("/users", user);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const handleServer = () => console.log(`server start to ${PORT}`);
 /**
