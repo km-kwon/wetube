@@ -1,9 +1,9 @@
 import express from "express"
-import {see, edit, upload, deleteVideo} from "../controllers/videoControllers";
+import {watch, edit, upload, deleteVideo} from "../controllers/videoControllers";
 const videoRouter = express.Router();
 
 videoRouter.get("/upload", upload);
-videoRouter.get("/:id(\\d+)", see);
+videoRouter.get("/:id(\\d+)", watch);
 //:붙으면 변수취급  당함 :id 대신 :potato  써도됨 ㅋ
 //express에게 변수인걸 알려주기 위해 :붙임
 //이거 중요함 /upload가 왜 /:id 위에 있냐면 express가 upload라는 문자열을

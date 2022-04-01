@@ -1,7 +1,9 @@
-doctype html 
-html(lang="ko")
-    head 
-        title Wetube 
-    body 
-        h1 Welcome 
-        include partials//footer.pug
+extends base.pug
+include mixins/video
+
+block content 
+    h1 Welcom here you treding vidoeo
+    each video in videos
+        +video(video)
+    else    
+        li sorry noting find
