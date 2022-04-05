@@ -12,12 +12,14 @@ app.set("views", "src/views");
 app.set("view engine", "pug");
 app.use(logger);
 //morgan 흠.. logger임(유용한 패키지) 그냥 뭐 사용된 메소드나 아니면 경로같은거 보여주는
+app.use(express.urlencoded({extended: true}));
+//express 는 form을 인식 못함 그래서 이 문장 써주면 부야! 작동되쥬
+//req.body라는 걸로 전달함 특정 url에서 쏴주는 거임(js 표현식 같은것)
 
-
-//라우터 내에 함수를 넣어줘야댐
 app.use("/", global);
 app.use("/videos", video);
 app.use("/users", user);
+//라우터 내에 함수를 넣어줘야댐
 
 
 

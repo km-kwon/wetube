@@ -1,4 +1,12 @@
 extends base.pug
 
 block content 
-    h1 edit! 
+    h4 Change title of #{video.title}
+    form(method = "post")
+        input(
+            name = "Title",
+            placeholer = "Video Title", 
+            value = `${video.title}`,
+            required
+        )
+        input(value = "save", type = "submit")
