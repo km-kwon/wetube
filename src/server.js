@@ -1,9 +1,12 @@
+import "./db.js";
+//db.js를 import  해주므로써 mongodb에 연결됨
 import express from "express";
 import morgan from "morgan";
 import global from "./routers/globalRouter.js";
 import user from "./routers/userRouter.js";
 import video from "./routers/videoRouter.js";
 //export default 했으니 하나의 변수로써 가지고오면서 정의 
+
 
 const PORT  = 4000;
 const app = express();
