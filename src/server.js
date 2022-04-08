@@ -1,5 +1,3 @@
-import "./db.js";
-//db.js를 import  해주므로써 mongodb에 연결됨
 import express from "express";
 import morgan from "morgan";
 import global from "./routers/globalRouter.js";
@@ -8,7 +6,6 @@ import video from "./routers/videoRouter.js";
 //export default 했으니 하나의 변수로써 가지고오면서 정의 
 
 
-const PORT  = 4000;
 const app = express();
 const logger = morgan("dev");
 app.set("views", "src/views");
@@ -27,28 +24,9 @@ app.use("/users", user);
 
 
 
+export default app;
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-const handleServer = () => console.log(`server start to ${PORT}`);
-/**
- == const handleServer = function() {
-     conosle.log("serverlisaf");
- }
-*/
-app.listen(PORT, handleServer);
-/* app.listen 은 말그대로 request를 listen
- 하는거임 ${PORT}포트로 누가 들어간 행동을 listen
- 4000번 창문을 열어서 누가 들어오나 확인하는 거지
-*/

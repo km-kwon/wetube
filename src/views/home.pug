@@ -1,8 +1,7 @@
 extends base.pug
 include mixins/video
 
-block content 
-    h1 Welcom here you treding vidoeo
+block content
     each video in videos
         +video(video)
     else    
