@@ -1,4 +1,4 @@
-import Video from "../models/Video";
+import videoModel from "../models/Video";
 
 /*
 callback이란 ex video.find(변수, function) 이라고 했을때 find 랑 function이
@@ -20,9 +20,10 @@ export const home = (req,res)=> {
 */
 export const home = async(req,res)=> {
     try{
-        const videos = await Video.find({});
+        const videos = await videoModel.find({});
         //await 는 funcion안에서만 가능 그 funcion에 async를 붙혀주는 국룰
-        return res.render("home",{pageTitle: "home", videos: []});
+        console.log(videos);
+        return res.render("home",{pageTitle: "home", videos});
     }catch(error){
         return res.render("error occur: ", error);
     }
@@ -46,7 +47,19 @@ export const postEdit = (req, res) =>{
 export const getUpload = (req, res) => {
     return res.render("upload", {pageTitle: "upload Video"});
 }
-export const postUpload = (req,res) => {
-    const newVideo = {title: req.body.title}
-    return res.redirect("/");
+export const postUpload = async(req,res) => {
+    try{
+        const{ title, description, hashtags } = req.body;
+        //== const title: req.body.title;
+        const video = new videoModel({
+            title,
+            description,
+            hashTags: hashtags.split(",").map(each => `#${each}`)
+        });
+        await video.save();
+        //database에 저장되는 시간은 기다려 주는게 좋음 ㅋ
+        return res.redirect("/");
+    }catch(err){
+        return res.render("upload", {pageTitle: "upload Vdieo", err});
+    }
 }

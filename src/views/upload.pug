@@ -1,6 +1,10 @@
 extends base.pug
 
 block content  
+    if(err)
+        span #{err_message}
     form(method = "post")
-        input(name = "title", value= `${video.title}`, required, type = "text")
+        input(name = "title", placeholder = "title", required, type = "text")
+        input(name = "description", placeholder = "description", required, type = "text")
+        input(name = "hashtags", placeholder = "hashtags nope comma", type = "text")
         input(type = "submit", value = "OK")

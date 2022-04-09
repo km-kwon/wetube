@@ -3,7 +3,7 @@ mixin video(videoInfo)
         h4  
             a(href=`/videos/${videoInfo.id}`) #{videoInfo.title}
         ul 
-            li #{videoInfo.rating}/5
+            li #{videoInfo.metaData.views}/5
             li #{videoInfo.comments}
-            li posted #{videoInfo.createdAt}
+            li posted #{videoInfo.creationDate}
             li #{videoInfo.views} views
