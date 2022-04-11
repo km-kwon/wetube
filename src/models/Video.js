@@ -5,16 +5,17 @@ import mongoose from "mongoose";
 
 
 const videoSchema = new mongoose.Schema({
-    title: {type : String, required: true},
-    description: {type : String, required: true},
+    title: {type : String, required: true, trim:true, manLength: 80},
+    description: {type : String, required: true, trim:true, minLength: 3},
     creationDate: {type: Date, required : true, default: Date.now },
-    hashTags: [{type: String}],
+    hashTags: [{type: String, trim:true}],
     metaData: {
         views: {type: Number, default: 0, required: true},
         rating: {type: Number, default: 0, required: true}
     }
 });
-
+//trim은 스키마의 요소를 설정할수있는 옵션임 그냥 부가적인 요소
+//ex trim은 양쪽 스페이스(빈공간)을 없애줌
 
 const videoModel = mongoose.model("Video", videoSchema);
 //여기서 videoModel의 이름은 Video임

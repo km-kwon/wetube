@@ -1,4 +1,4 @@
-import videoModel from "../models/Video";
+import Videos from "../models/Video";
 
 /*
 callback이란 ex video.find(변수, function) 이라고 했을때 find 랑 function이
@@ -20,7 +20,7 @@ export const home = (req,res)=> {
 */
 export const home = async(req,res)=> {
     try{
-        const videos = await videoModel.find({});
+        const videos = await Videos.find({});
         //await 는 funcion안에서만 가능 그 funcion에 async를 붙혀주는 국룰
         console.log(videos);
         return res.render("home",{pageTitle: "home", videos});
@@ -30,17 +30,41 @@ export const home = async(req,res)=> {
 };
 //pug에서 설정한 변수는 controller에서 보낼수 있음
 
-export const watch = (req,res) =>{
-    return res.render("watch", {pageTitle: `Watching`});
+export const watch = async(req,res) =>{
+    const {id} = req.params;
+    // == const id = req.params.id;
+    //req.params는 router가 주는 express의 기능
+    const video = await Videos.findById(id);
+    if(video){
+        console.log(video);
+        return res.render("watch", {pageTitle: video.title, video});
+    }else{
+        return res.render("404", {pageTitle: "nope video"});
+    }
 };
-export const getEdit = (req, res) => {
-    return res.render("edit", {pageTitle: `Editing`});
+export const getEdit = async(req, res) => {
+    const {id} = req.params;
+    const video = await Videos.findById(id);
+    if(video){
+        return res.render("edit", {pageTitle: `Edit ${video.title}`, video});
+    }else{
+        return res.render("404");
+    }
 };
 
-export const postEdit = (req, res) =>{
+export const postEdit = async(req, res) =>{
+    const {Title, description, hashtags} = req.body;
     const id = req.params.id;
-    const title = req.body.Title;
-    //form의 name값을 기준으로 obj를 만듦
+    const video = await Videos.findById(id);
+    if(!video){
+        return res.render("404");
+    }
+    video.title = Title;
+    video.description = description;
+    video.hashTags 
+    = hashtags.split(",").map((each) => (each.startsWith('#') ? each : `#${each}`));
+    console.log(video.hashTags);
+    video.save();
     return res.redirect(`/videos/${id}`);
 } 
 
@@ -51,10 +75,10 @@ export const postUpload = async(req,res) => {
     try{
         const{ title, description, hashtags } = req.body;
         //== const title: req.body.title;
-        const video = new videoModel({
+        const video = new Videos({
             title,
             description,
-            hashTags: hashtags.split(",").map(each => `#${each}`)
+            hashTags: hashtags.split(",").map((each) => (each.startsWith('#') ? each : `#${each}`))
         });
         await video.save();
         //database에 저장되는 시간은 기다려 주는게 좋음 ㅋ
