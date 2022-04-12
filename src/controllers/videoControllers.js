@@ -22,7 +22,6 @@ export const home = async(req,res)=> {
     try{
         const videos = await Videos.find({});
         //await 는 funcion안에서만 가능 그 funcion에 async를 붙혀주는 국룰
-        console.log(videos);
         return res.render("home",{pageTitle: "home", videos});
     }catch(error){
         return res.render("error occur: ", error);
@@ -36,7 +35,6 @@ export const watch = async(req,res) =>{
     //req.params는 router가 주는 express의 기능
     const video = await Videos.findById(id);
     if(video){
-        console.log(video);
         return res.render("watch", {pageTitle: video.title, video});
     }else{
         return res.render("404", {pageTitle: "nope video"});
@@ -55,16 +53,16 @@ export const getEdit = async(req, res) => {
 export const postEdit = async(req, res) =>{
     const {Title, description, hashtags} = req.body;
     const id = req.params.id;
-    const video = await Videos.findById(id);
+    const video = await Videos.exists({_id: id});
+    //exists는 id를 받는게 아니라 filter를 받음 즉 조건을 받아 검색하는거임
     if(!video){
         return res.render("404");
     }
-    video.title = Title;
-    video.description = description;
-    video.hashTags 
-    = hashtags.split(",").map((each) => (each.startsWith('#') ? each : `#${each}`));
-    console.log(video.hashTags);
-    video.save();
+    await Videos.findByIdAndUpdate(id, {
+        title: Title,
+        description,
+        hashTags: Videos.formatHashTasgs(hashtags)
+    })
     return res.redirect(`/videos/${id}`);
 } 
 
@@ -75,15 +73,21 @@ export const postUpload = async(req,res) => {
     try{
         const{ title, description, hashtags } = req.body;
         //== const title: req.body.title;
-        const video = new Videos({
+        //const video = new Videos 이렇게 해도 되고
+        await Videos.create({
             title,
             description,
-            hashTags: hashtags.split(",").map((each) => (each.startsWith('#') ? each : `#${each}`))
+            hashTags: Videos.formatHashTasgs(hashtags)
         });
-        await video.save();
         //database에 저장되는 시간은 기다려 주는게 좋음 ㅋ
         return res.redirect("/");
     }catch(err){
         return res.render("upload", {pageTitle: "upload Vdieo", err});
     }
+}
+
+export const deleteVideo = async(req, res) => {
+    const { id } = req.params;
+    await Videos.findByIdAndDelete(id);
+    return res.redirect("/");
 }
