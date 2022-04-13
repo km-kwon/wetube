@@ -20,8 +20,9 @@ export const home = (req,res)=> {
 */
 export const home = async(req,res)=> {
     try{
-        const videos = await Videos.find({});
+        const videos = await Videos.find({}).sort({creationDate: "asc"});
         //await 는 funcion안에서만 가능 그 funcion에 async를 붙혀주는 국룰
+        //sort 는 asc는 creationDate요소를 오름차순
         return res.render("home",{pageTitle: "home", videos});
     }catch(error){
         return res.render("error occur: ", error);
@@ -90,4 +91,22 @@ export const deleteVideo = async(req, res) => {
     const { id } = req.params;
     await Videos.findByIdAndDelete(id);
     return res.redirect("/");
+}
+
+
+export const search = async(req, res) =>{
+    const {keyword} = req.query;
+    //express가 query를 똿 만들어줘서 url name값에 접근하기 쉬워용
+    //ex) youtube의 https://www.youtube.com/results?search_query=홀리시발
+    let videos = [];
+    if(keyword){
+            videos = await Videos.find({
+            title: keyword
+        });
+    }
+    console.log(videos);
+    return res.render("search", {
+        pageTitle: "Search",
+        videos
+    });
 }

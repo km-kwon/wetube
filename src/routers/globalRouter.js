@@ -1,5 +1,5 @@
 import express from "express";
-import { home } from "../controllers/videoControllers";
+import { home, search } from "../controllers/videoControllers";
 import { join, login } from "../controllers/userController";
 
 
@@ -11,6 +11,7 @@ globalRouter.get("/", home);
 
 globalRouter.get("/join", join);
 globalRouter.get("/login", login);
+globalRouter.get("/search", search);
 
 export default globalRouter;
 // export default 변수나 함수 즉 특정한 "변수" 로써 export
