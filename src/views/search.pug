@@ -5,6 +5,6 @@ block content
     form(method="GET")
         input(placeholder="search by title", type="text", name="keyword")
         input(type="submit", value="search now")
-
-    each video in videos 
-        +video(video)
+    if videos 
+        each video in videos 
+            +video(video)

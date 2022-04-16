@@ -96,15 +96,20 @@ export const deleteVideo = async(req, res) => {
 
 export const search = async(req, res) =>{
     const {keyword} = req.query;
-    //express가 query를 똿 만들어줘서 url name값에 접근하기 쉬워용
+    //req.query는 url에 있는 name을 가져와줌
     //ex) youtube의 https://www.youtube.com/results?search_query=홀리시발
     let videos = [];
     if(keyword){
             videos = await Videos.find({
-            title: keyword
+            title:{
+                $regex: new RegExp(keyword, "i")
+                //이건 keyword를 포함하면!
+                //^${keyword} 이건 keyword로 시작하면! 꺽쇄는 시작임
+                //${keyword}$ 이건 keyword로 끝나면!
+                //근데 솔직히 이해가 안됨 ㅅㅂ;;;
+            }
         });
     }
-    console.log(videos);
     return res.render("search", {
         pageTitle: "Search",
         videos

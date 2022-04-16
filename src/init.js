@@ -1,6 +1,5 @@
 import "./db";
 //db.js를 import  해주므로써 mongodb에 연결됨
-import videoModel from "./models/Video";
 import app from "./server";
 
 
