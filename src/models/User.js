@@ -10,9 +10,7 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre("save", async function() {
-    console.log(this.password);
     this.password = await bcrypt.hash(this.password, 5);
-    console.log(this.password);
 });
 // 말그대로 save 되기전에 저 함수를 실행시킨다는거임
 //존나 유용할거 같으니 잘 알아두기

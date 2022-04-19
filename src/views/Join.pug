@@ -1,10 +1,16 @@
 extend base.pug
 
 block content 
+    if error 
+        span=error 
     form(method="post")
         input(name = "username", placeholder = "username", required, type = "text")
         input(name = "email", placeholder = "email", required, type = "email")
         input(name = "password", placeholder = "password", required, type = "password")
+        input(name = "password2", placeholder = "confirm password", required, type = "password")
         input(name = "name", placeholder = "name", required, type = "text")
         input(name = "location", placeholder = "location", required, type = "text")
         input(type = "submit", value = "Join!")
+    div 
+        span Already have account?   
+        a(href = "/login") log in now &rarr;

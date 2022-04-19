@@ -38,7 +38,7 @@ export const watch = async(req,res) =>{
     if(video){
         return res.render("watch", {pageTitle: video.title, video});
     }else{
-        return res.render("404", {pageTitle: "nope video"});
+        return res.status(404).render("404", {pageTitle: "nope video"});
     }
 };
 export const getEdit = async(req, res) => {
@@ -47,7 +47,7 @@ export const getEdit = async(req, res) => {
     if(video){
         return res.render("edit", {pageTitle: `Edit ${video.title}`, video});
     }else{
-        return res.render("404");
+        return res.status(404).render("404");
     }
 };
 
@@ -83,7 +83,7 @@ export const postUpload = async(req,res) => {
         //database에 저장되는 시간은 기다려 주는게 좋음 ㅋ
         return res.redirect("/");
     }catch(err){
-        return res.render("upload", {pageTitle: "upload Vdieo", err});
+        return res.status(400).render("upload", {pageTitle: "upload Vdieo", err});
     }
 }
 

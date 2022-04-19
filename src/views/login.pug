@@ -1,0 +1,13 @@
+extend base.pug
+
+block content 
+    if error 
+        span=error 
+    form(method="post")
+        input(name = "username", placeholder = "username", required, type = "text")
+        input(name = "password", placeholder = "password", required, type = "password")
+        input(type = "submit", value = "Login!")
+    div 
+        span don't have account? 
+        a(href = "/join") Create now! &rarr;
+        

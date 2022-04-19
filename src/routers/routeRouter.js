@@ -1,6 +1,6 @@
 import express from "express";
 import { home, search } from "../controllers/videoControllers";
-import { getJoin, postJoin, login } from "../controllers/userController";
+import { getJoin, postJoin, getLogin, postLogin} from "../controllers/userController";
 
 
 //객체형식 import는 controller의 함수명 그대로 가지고 와야댐
@@ -10,7 +10,7 @@ const routeRouter = express.Router();
 routeRouter.get("/", home);
 
 routeRouter.route("/join").get(getJoin).post(postJoin);
-routeRouter.get("/login", login);
+routeRouter.route("/login").get(getLogin).post(postLogin);
 routeRouter.get("/search", search);
 
 export default routeRouter;
