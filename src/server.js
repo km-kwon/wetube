@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import session from "express-session";
+import mongoStore from "connect-mongo";
 import routeRouter from "./routers/routeRouter.js";
 import user from "./routers/userRouter.js";
 import video from "./routers/videoRouter.js";
@@ -20,9 +21,22 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(
     session({
-        secret: "hello",
-        resave: true,
-        saveUninitialized: true
+        secret: process.env.COOKIE_SECRET,
+        //s이건 우리가 쿠키에 sign 할때 사용하는 string임
+        //backend에 쿠키를 줬다는걸 증명하는 거임
+        //세션 하이재킹을 막기위함임
+        resave: false,
+        //모든 req마다 세션의 변경사항이 있든 없든 다시 저장함
+        //usercontroller postlogin 보면 session값 수정하잖아 그때만 쿠키 날린다는 거지
+        saveUninitialized: false,
+        //uninitialized상태인 세션을 저장함
+        //이건 req때 생성된 이후로 아무런 작업이 가해지지않는 초기상태의 세션
+        //true로 하면 클라이언트들이 서버에 방문한 총 횟수를 알고자 할때 사용
+        store: mongoStore.create({
+            mongoUrl: process.env.DB_URL
+            //세션들을 이제 여기 url에 저장함
+            //show collections 하면 session 나옴
+        })
     })
 );
 app.use(localsMiddleware);
