@@ -1,3 +1,4 @@
+import "dotenv/config";
 import "./db";
 //db.js를 import  해주므로써 mongodb에 연결됨
 import app from "./server";
